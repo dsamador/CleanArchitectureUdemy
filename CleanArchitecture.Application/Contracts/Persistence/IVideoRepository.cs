@@ -6,11 +6,11 @@ namespace CleanArchitecture.Application.
             IAsyncRepository<Video>
     {
         //Consulta por nombre del video
-        Task<IEnumerable<Video>> GetVideoByNombre
+        Task<Video> GetVideoByNombre
                 (string nombreVideo);
         
         //Consulta por el usuario que tiene el video
-        Task<Video> GetVideoByUserName
+        Task<IEnumerable<Video>> GetVideoByUserName
                 (string username);
     }
 }
