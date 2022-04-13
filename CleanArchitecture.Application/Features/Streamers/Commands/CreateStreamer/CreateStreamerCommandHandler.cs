@@ -1,21 +1,16 @@
 ﻿using AutoMapper;
-using CleanArchitecture.Application.
-    Contracts.Infrastructure;
-using CleanArchitecture.Application.
-    Contracts.Persistence;
+using CleanArchitecture.Application.Contracts.Infrastructure;
+using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Models;
 using CleanArchitecture.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace CleanArchitecture.Application
-        .Features.Streamers.Commands
+namespace CleanArchitecture.Application.Features.Streamers.Commands
 {
-    public class CreateStreamerCommandHandler : 
-        IRequestHandler<CreateStreamerCommand, int>
+    public class CreateStreamerCommandHandler : IRequestHandler<CreateStreamerCommand, int>
     {
-        private readonly IStreamerRepository 
-                _streamerRepository;//Para hacer los registros
+        private readonly IStreamerRepository _streamerRepository;//Para hacer los registros
         
         private readonly IMapper _mapper;
         
@@ -23,8 +18,7 @@ namespace CleanArchitecture.Application
         private readonly IEmailService _emailService;
         
         //para registrar la transaccion
-        private readonly 
-                ILogger<CreateStreamerCommandHandler> _logger;
+        private readonly ILogger<CreateStreamerCommandHandler> _logger;
 
         public CreateStreamerCommandHandler(
             IStreamerRepository streamerRepository, 
