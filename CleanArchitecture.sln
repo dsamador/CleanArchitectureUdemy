@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.API", "Cl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Application", "CleanArchitecture.Application\CleanArchitecture.Application.csproj", "{86F78B04-F085-41CD-BB75-7649A0E312EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Identity", "CleanArchitecture.Identity\CleanArchitecture.Identity.csproj", "{C8991A66-25E9-4559-8522-B8D479975C3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{86F78B04-F085-41CD-BB75-7649A0E312EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86F78B04-F085-41CD-BB75-7649A0E312EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86F78B04-F085-41CD-BB75-7649A0E312EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8991A66-25E9-4559-8522-B8D479975C3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8991A66-25E9-4559-8522-B8D479975C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8991A66-25E9-4559-8522-B8D479975C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8991A66-25E9-4559-8522-B8D479975C3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{9A4DA89F-B9DE-4DE6-936C-8F29DAEF730F} = {1B9F3D4C-DBCC-49CB-A399-E3CF75B9390A}
 		{B103EDD5-2764-45C7-9F96-3F9A11D8DD00} = {1DE0EC77-0C03-4E6D-8DF6-B512187C1517}
 		{86F78B04-F085-41CD-BB75-7649A0E312EA} = {8529A549-1DA3-4970-9EC4-E536989775A7}
+		{C8991A66-25E9-4559-8522-B8D479975C3F} = {9A4DA89F-B9DE-4DE6-936C-8F29DAEF730F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {86C4C8D4-7363-4DD3-A85F-02BF4C24FDDD}
