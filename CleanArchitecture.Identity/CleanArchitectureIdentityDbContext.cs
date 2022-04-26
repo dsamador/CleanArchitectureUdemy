@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using CleanArchitecture.Identity.Configurations;
+using CleanArchitecture.Identity.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Identity
@@ -13,9 +15,9 @@ namespace CleanArchitecture.Identity
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            ModelBuilder.ApplyConfiguration(new RoleConfiguration());
-            ModelBuilder.ApplyConfiguration(new UserConfiguration());
-            ModelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new UserRoleConfiguration());
         }
     }
 }
