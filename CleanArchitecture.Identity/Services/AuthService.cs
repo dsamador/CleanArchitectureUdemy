@@ -1,7 +1,12 @@
-﻿using CleanArchitecture.Application.Contracts.Identity;
+﻿using CleanArchitecture.Application.Constants;
+using CleanArchitecture.Application.Contracts.Identity;
 using CleanArchitecture.Application.Models.Identity;
 using CleanArchitecture.Identity.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace CleanArchitecture.Identity.Services
 {
@@ -40,10 +45,12 @@ namespace CleanArchitecture.Identity.Services
             if (!result.Succeeded)
                 throw new Exception("Las credenciales son incorrectas");
 
+            var token = await GenerateToken(user);
+
             var authResponse = new AuthResponse
             {
                 Id = user.Id,
-                Token = "",
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Email = user.Email,
                 Username = user.UserName
             };
@@ -73,15 +80,48 @@ namespace CleanArchitecture.Identity.Services
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "Operator");
+                var token = await GenerateToken(user);
                 return new RegistrationResponse
                 {
                     Email = user.Email,
-                    Token = "",
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
                     UserId = user.Id,
                     Username = user.UserName
                 };
             }
             throw new Exception($"{result.Errors}");
+        }
+
+        private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
+        {
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var roleClaims = new List<Claim>();
+
+            foreach (var role in roles)            
+                roleClaims.Add(new Claim(ClaimTypes.Role, role));
+            
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(CustomClaimTypes.Uid, user.Id),
+            }.Union(userClaims).Union(roleClaims);
+
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+
+            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+            var jwtSecurityToken = new JwtSecurityToken(
+                    issuer: _jwtSettings.Issuer,
+                    audience: _jwtSettings.Audience,
+                    claims: claims,
+                    expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
+                    signingCredentials: signingCredentials
+                );
+
+            return jwtSecurityToken;
         }
     }
 }
