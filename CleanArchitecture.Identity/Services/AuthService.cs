@@ -50,9 +50,38 @@ namespace CleanArchitecture.Identity.Services
             return authResponse;
         }
 
-        public Task<RegistrationResponse> Register(RegistrationRequest request)
+        public async Task<RegistrationResponse> Register(RegistrationRequest request)
         {
-            
+            var existingUser = await _userManager.FindByNameAsync(request.Username);
+            if (existingUser == null)
+                throw new Exception("El username ya existe");
+
+            var existingEmail = await _userManager.FindByEmailAsync(request.Email);
+            if (existingUser == null)
+                throw new Exception("El email ya existe");
+
+            var user = new ApplicationUser
+            {
+                Email = request.Email,
+                Nombre = request.Nombre,
+                Apellidos = request.Apellidos,
+                UserName = request.Username,
+                EmailConfirmed = true
+            };
+
+            var result = await _userManager.CreateAsync(user, request.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "Operator");
+                return new RegistrationResponse
+                {
+                    Email = user.Email,
+                    Token = "",
+                    UserId = user.Id,
+                    Username = user.UserName
+                };
+            }
+            throw new Exception($"{result.Errors}");
         }
     }
 }
