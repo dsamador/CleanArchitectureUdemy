@@ -9,14 +9,12 @@ namespace CleanArchitecture.Infrastructure.Repositories
     {
         public VideoRepository(StreamerDbContext context) : base(context){ }        
 
-        public async Task<Video> GetVideoByNombre(string nombreVideo)
-        {
-            return await _context.Videos!.Where(v => v.Nombre == nombreVideo).FirstOrDefaultAsync();            
-        }
+        public async Task<Video> GetVideoByNombre(string nombreVideo)        
+            => await _context.Videos!.Where(v => v.Nombre == nombreVideo).FirstOrDefaultAsync();            
+        
 
-        public async Task<IEnumerable<Video>> GetVideoByUserName(string username)
-        {
-            return await _context.Videos!.Where(v => v.CreatedBy == username).ToListAsync();   
-        }
+        public async Task<IEnumerable<Video>> GetVideoByUserName(string username)        
+            => await _context.Videos!.Where(v => v.CreatedBy == username).ToListAsync();   
+        
     }
 }
