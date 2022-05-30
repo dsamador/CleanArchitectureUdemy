@@ -15,12 +15,15 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.ConfigureIdentitySrevices(builder.Configuration);
 
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin()
-    .AllowAnyMethod().AllowAnyHeader());
+    options.AddPolicy("CorsPolicy", builder => builder
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+    );
 });
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
