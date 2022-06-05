@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Application.Features.Videos.Queries.GetVideosList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -20,6 +21,7 @@ namespace CleanArchitecture.API.Controllers
         //lista de videos por usuario por ello username, GetVideo se refiere al nombre del metodo
         //para el cliente dentro de la URL
         [HttpGet("{username}", Name = "GetVideo")]
+        [Authorize]
         //El tipo que vamos a devolver y un estatus code de la respuesta
         [ProducesResponseType(typeof(IEnumerable<VideosVm>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<VideosVm>>> GetVideosByUsername(string username)
