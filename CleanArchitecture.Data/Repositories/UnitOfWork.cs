@@ -26,7 +26,8 @@ namespace CleanArchitecture.Infrastructure.Repositories
             _context.Dispose();
         }
 
-        public IAsyncRepository<TEntity> Repository<TEntity>() where TEntity : BaseDomainModel
+        public IAsyncRepository<TEntity> Repository<TEntity>() 
+                where TEntity : BaseDomainModel
         {
             if(_repositories == null)
             {
@@ -38,7 +39,10 @@ namespace CleanArchitecture.Infrastructure.Repositories
             if (!_repositories.ContainsKey(type))
             {
                 var repositoryType = typeof(IAsyncRepository<>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context);
+                var repositoryInstance = Activator
+                            .CreateInstance(repositoryType
+                                    .MakeGenericType(typeof(TEntity)), _context);
+
                 _repositories.Add(type, repositoryInstance);
             }
             return (IAsyncRepository<TEntity>)_repositories[type];
